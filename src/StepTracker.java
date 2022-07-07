@@ -1,6 +1,8 @@
+import java.util.Scanner;
+
 public class StepTracker {
     Converter converter;
-    MonthData[] monthToData;
+    final MonthData[] monthToData; //Сделал константой.
     int goal;
 
      StepTracker() {
@@ -103,6 +105,53 @@ public class StepTracker {
             }
             return sum;
         }
+    }
+
+   void changeGoal(StepTracker stepTracker, Scanner scanner) { //Перенес из класса Main в StepTracker и убрал модификатор static.
+        System.out.println("Введите значение новой цели.");
+        int steps = scanner.nextInt();
+        while (steps < 0) {
+            System.out.println("Значение не может быть меньше нуля");
+            System.out.println("Введите значение новой цели.");
+            steps = scanner.nextInt();
+        }
+        stepTracker.swapGoal(steps);
+    }
+
+    void saveSteps(StepTracker stepTracker, Scanner scanner) { //Перенес из класса Main в StepTracker и убрал модификатор static.
+        System.out.println("Введите месяц в числовом выражении (от 1 до 12).");
+        int month = scanner.nextInt();
+        while (month < 1 || month > 12) {
+            System.out.println("Неправильный ввод. Доступные значения от 1 до 12.");
+            System.out.println("Введите месяц в числовом выражении (от 1 до 12).");
+            month = scanner.nextInt();
+        }
+        System.out.println("Введите день в числовом выражении (от 1 до 30).");
+        int day = scanner.nextInt();
+        while (day < 1 || day > 30) {
+            System.out.println("Неправильный ввод. Доступные значения от 1 до 30.");
+            System.out.println("Введите день в числовом выражении (от 1 до 30).");
+            day = scanner.nextInt();
+        }
+        System.out.println("Введите количество шагов.");
+        int steps = scanner.nextInt();
+        while (steps < 0) {
+            System.out.println("Количество шагов не может быть меньше нуля");
+            System.out.println("Введите количество шагов.");
+            steps = scanner.nextInt();
+        }
+        stepTracker.saveSteps(month - 1, day - 1, steps);
+        System.out.println("Количество шагов сохранено.");
+    }
+    void getStatistics(StepTracker stepTracker, Scanner scanner) { //Перенес из класса Main в StepTracker и убрал модификатор static.
+        System.out.println("Введите месяц в числовом выражении (от 1 до 12).");
+        int month = scanner.nextInt();
+        while (month < 1 || month > 12) {
+            System.out.println("Неправильный ввод. Доступные значения от 1 до 12.");
+            System.out.println("Введите месяц в числовом выражении (от 1 до 12).");
+            month = scanner.nextInt();
+        }
+        stepTracker.getWholeStatistics(month - 1);
     }
     void getWholeStatistics(int month) {
         getStatForAllDays(month);
